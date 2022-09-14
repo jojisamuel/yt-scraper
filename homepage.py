@@ -32,7 +32,8 @@ option = st.selectbox('Select option', CHOICES.keys(), format_func=lambda x:CHOI
 
 if st.button('SEARCH'):
     df_result_search = df_search[df_search['channelId'] == option]
-    df_result_search.rename(columns={'videoOwnerChannelTitle':'Name Of Youtuber'},inplace=True)
+    # df_result_search=df_result_search.rename(columns={'videoOwnerChannelTitle':'Name Of Youtuber'})
+    df_result_search.columns = df_result_search.columns.str.replace('videoOwnerChannelTitle', 'Name Of Youtuber')
     style = df_result_search.reset_index()
     style = style[['Thumbnail','Title Of the Video','Name Of Youtuber','Video Link','Download Link','Likes','No Of Comments']]
 
@@ -42,9 +43,3 @@ if st.button('SEARCH'):
         unsafe_allow_html=True
     )
 
-    st.download_button(
-         label="Download data as HTML",
-        data=style,
-        file_name='output.html',
-        mime='text/html',
-        )
